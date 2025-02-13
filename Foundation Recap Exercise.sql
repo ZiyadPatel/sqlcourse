@@ -22,7 +22,25 @@ c) only the Surgery wards
 */
 
 -- Write the SQL statement here
+SELECT
+	--*, 
+	PatientId, 
+	AdmittedDate, 
+	DischargeDate, 
+	Hospital, 
+	Ward, 
+	DATEDIFF(dd,AdmittedDate,DischargeDate)+1 as LengthOfStay
+--	left (datename(mm,AdmittedDate),3)+'-'+ right (datename(yy,AdmittedDate),2) as Month, 
+--	FORMAT(AdmittedDate,'yyyyMM') as YearMonth
+FROM
+	PatientStay ps 
+WHERE Hospital in ('Oxleas', 'PRUH')
+--and AdmittedDate between '2024-02-01' and '2024-02-29'
+--and left (datename(mm,AdmittedDate),3)+'-'+ right (datename(yy,AdmittedDate),2) = 'Feb-24'
+and FORMAT(AdmittedDate,'yyyyMM') = '202402'
+and Ward like '%Surgery%'
 
+ORDER BY AdmittedDate desc,  PatientId desc
 
 /*
 5. How many patients has each hospital admitted? 
